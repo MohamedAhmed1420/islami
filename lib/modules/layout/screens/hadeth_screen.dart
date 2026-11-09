@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:islami/modules/hadeth_details/screen/hadeth_detail.dart';
 
 import '../../../core/theme/app_colors.dart';
 
@@ -50,82 +51,92 @@ class _HadethScreenState extends State<HadethScreen> {
                     : CarouselSlider.builder(
                         itemCount: ahadeth.length,
                         itemBuilder: (context, index, realIndex) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: AppColors.gold,
-                              borderRadius: BorderRadius.circular(20),
+                          return InkWell(
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return HadethDetail(hadeth: ahadeth[index]);
+                                },
+                              ),
                             ),
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Image.asset(
-                                          "assets/images/img_left_corner.png",
-                                          color: AppColors.black,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.gold,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Image.asset(
+                                            "assets/images/img_left_corner.png",
+                                            color: AppColors.black,
+                                          ),
                                         ),
-                                      ),
-                                      Expanded(
-                                        flex: 3,
-                                        child: Center(
-                                          child: Text(
-                                            ahadeth[index].title,
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              color: AppColors.black,
-                                              fontWeight: FontWeight.w700,
+                                        Expanded(
+                                          flex: 3,
+                                          child: Center(
+                                            child: Text(
+                                              ahadeth[index].title,
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                color: AppColors.black,
+                                                fontWeight: FontWeight.w700,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      Expanded(
-                                        child: Image.asset(
-                                          "assets/images/img_right_corner.png",
-                                          color: AppColors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      // 3. Fixed Stack layout (replaced Expanded with Positioned.fill)
-                                      Positioned.fill(
-                                        child: Image.asset(
-                                          "assets/images/HadithCardBackGround.png",
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                      SingleChildScrollView(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(16.0),
-                                          child: Text(
-                                            ahadeth[index].body,
-                                            style: TextStyle(
-                                              color: AppColors.black,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 16,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                            textDirection: TextDirection.rtl,
+                                        Expanded(
+                                          child: Image.asset(
+                                            "assets/images/img_right_corner.png",
+                                            color: AppColors.black,
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Image.asset(
-                                    "assets/images/Mosque-02.png",
-                                    fit: BoxFit.cover,
+                                  Expanded(
+                                    child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        // 3. Fixed Stack layout (replaced Expanded with Positioned.fill)
+                                        Positioned.fill(
+                                          child: Image.asset(
+                                            "assets/images/HadithCardBackGround.png",
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                        SingleChildScrollView(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(16.0),
+                                            child: Text(
+                                              ahadeth[index].body,
+                                              style: TextStyle(
+                                                color: AppColors.black,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 16,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                              textDirection: TextDirection.rtl,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Image.asset(
+                                      "assets/images/Mosque-02.png",
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         },
