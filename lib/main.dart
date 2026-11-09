@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:islami/modules/splash/screens/splash_design.dart';
 
 
 import 'modules/layout/screens/layout_screen.dart';
@@ -17,11 +18,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
+        '/splash_design':(_)=>const SplashDesign(),
         '/splash': (context) => const SplashScreen(),
         '/LayoutScreen': (context) => const LayoutScreen(),
         '/intro': (context) => const Introscreen1(),
       },
-      home: SplashScreen(),
+      home: SplashDesign(),
     );
   }
 }

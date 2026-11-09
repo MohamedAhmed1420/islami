@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'dart:math';
-import 'package:flutter/material.dart';
-import 'package:islami/core/theme/app_colors.dart';
 
 class SebhaScreen extends StatefulWidget {
   const SebhaScreen({super.key});

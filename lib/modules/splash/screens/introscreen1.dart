@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:islami/core/theme/app_colors.dart';
 
-import '../../../core/IntroData.dart';
+import '../../../core/intro_data.dart';
 
 class Introscreen1 extends StatefulWidget {
   const Introscreen1({super.key});
