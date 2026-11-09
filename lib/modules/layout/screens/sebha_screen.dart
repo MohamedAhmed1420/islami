@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class SebhaScreen extends StatefulWidget {
   const SebhaScreen({super.key});
 
@@ -11,22 +10,23 @@ class SebhaScreen extends StatefulWidget {
 class _SebhaScreenState extends State<SebhaScreen> {
   int _counter = 0;
   int _azkarIndex = 0;
-  double _turns = 0.0;//متغير لحفظ قيمه الزاويه
-  // قائمة الأذكار
+  double _turns = 0.0; // Keeps track of rotation angle
+
+  // List of Azkar
   final List<String> _azkarList = [
     'سبحان الله',
     'الحمد لله',
     'الله أكبر',
   ];
 
-  // دالة عند الضغط على السبحة
+  // Tap handler for the Sebha
   void _onSebhaTap() {
     setState(() {
       _counter++;
-      // زيادة الزاوية (دورة كاملة قُسمت على 33 ضغطة)
+      // Increment rotation angle (one full circle divided across 33 taps)
       _turns += 1 / 33;
 
-      // عند الوصول إلى 33 تسبيحة يتم إعادة التصفير والتبديل
+      // When reaching 33, reset counter and switch to the next Zikr
       if (_counter == 33) {
         _counter = 0;
         _azkarIndex = (_azkarIndex + 1) % _azkarList.length;
@@ -37,21 +37,20 @@ class _SebhaScreenState extends State<SebhaScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage("assets/images/BackgroundSabha.png"),
           fit: BoxFit.cover,
         ),
       ),
-      child:
-       SafeArea(
+      child: SafeArea(
         child: SizedBox(
           width: double.infinity,
           child: Column(
             children: [
               const SizedBox(height: 10),
 
-              // 1. الشعار العلوي
+              // 1. Top Logo
               Image.asset(
                 'assets/logo/home_logo.png',
                 width: 220,
@@ -59,7 +58,7 @@ class _SebhaScreenState extends State<SebhaScreen> {
 
               const SizedBox(height: 20),
 
-              // 2. الآية القرأنية
+              // 2. Quranic Verse Header
               const Text(
                 'سَبِّحِ اسْمَ رَبِّكَ الأَعْلَى',
                 style: TextStyle(
@@ -71,19 +70,19 @@ class _SebhaScreenState extends State<SebhaScreen> {
 
               const Spacer(),
 
-              // منطقة الضغط والتفاعل
+              // Interactive Sebha Area
               GestureDetector(
                 onTap: _onSebhaTap,
                 behavior: HitTestBehavior.opaque,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    //. جسم السبحة الدوار (مع أنيميشن حركة)
+                    // Rotating Sebha Body with faster animation duration
                     Padding(
                       padding: const EdgeInsets.only(top: 40.0),
                       child: AnimatedRotation(
                         turns: _turns,
-                        duration: const Duration(milliseconds: 300), // سرعة دوران السبحة
+                        duration: const Duration(milliseconds: 150), // Snappier response
                         child: Image.asset(
                           'assets/images/SebhaBody.png',
                           width: 280,
@@ -92,17 +91,16 @@ class _SebhaScreenState extends State<SebhaScreen> {
                       ),
                     ),
 
-
+                    // Sebha Header Pin / Top Piece
                     Positioned(
-                      top: 0
-                      ,
+                      top: 0,
                       child: Image.asset(
                         'assets/images/Sabha_header.png',
                         width: 90,
                       ),
                     ),
 
-                    // 3. النص والعداد في منتصف السبحة
+                    // 3. Zikr Text and Counter in the Center
                     Padding(
                       padding: const EdgeInsets.only(top: 40.0),
                       child: Column(
