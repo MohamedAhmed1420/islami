@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/constant/sura_model.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../sura_details/screens/quran_details_screen.dart';
 
-class QuranScreen extends StatelessWidget {
-  QuranScreen({super.key});
+class QuranScreen extends StatefulWidget {
+  const QuranScreen({super.key});
+
+  @override
+  State<QuranScreen> createState() => _QuranScreenState();
+}
+
+class _QuranScreenState extends State<QuranScreen> {
+  List<SuraModel> suraSearchList = [];
+  bool isSearch = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +43,44 @@ class QuranScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Image.asset("assets/logo/home_logo.png", width: 300),
+
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        style: TextStyle(color: AppColors.white),
+                        onTapOutside: (event) {
+                          FocusManager.instance.primaryFocus!.unfocus();
+                        },
+                        onChanged: (value) {
+                          if (value.isNotEmpty) {
+                            isSearch=true;
+                          } else {isSearch=false;}
+                          suraSearch(value);
+                        },
+                        decoration: InputDecoration(
+                          prefixIcon: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: SvgPicture.asset(
+                              "assets/icons/ic_quran.svg",
+                              color: AppColors.gold,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: AppColors.gold),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: AppColors.gold),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: AppColors.gold),
+                          ),
+                        ),
+                      ),
+                    ),
+
                     Expanded(
                       child: ListView.separated(
                         separatorBuilder: (context, index) {
@@ -45,17 +92,17 @@ class QuranScreen extends StatelessWidget {
                           );
                         },
                         padding: EdgeInsets.all(8),
-                        itemCount: SuraModel.getAllSura().length,
+                        itemCount:!isSearch? SuraModel.getAllSura().length:suraSearchList.length,
 
                         itemBuilder: (context, index) {
-                          var sura = SuraModel.getAllSura()[index];
+                          var sura =!isSearch? SuraModel.getAllSura()[index]:suraSearchList[index];
                           return InkWell(
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return QuranDetailsScreen(sura: sura,);
+                                    return QuranDetailsScreen(sura: sura);
                                   },
                                 ),
                               );
@@ -127,5 +174,15 @@ class QuranScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void suraSearch(String q) {
+    suraSearchList.clear();
+    for (var e in SuraModel.getAllSura()) {
+      if (e.nameAr.contains(q) || e.nameEn.contains(q)) {
+        suraSearchList.add(e);
+      }
+    }
+    setState(() {});
   }
 }
